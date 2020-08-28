@@ -31,7 +31,7 @@ TechChallengeKentra-Flutter - EL AMRI ZAKARIYA
             </td>    
             <td>   
                 <a>
-                      <img src="assets/demo/list.png" width="230"/>                   
+                      <img src="assets/demo/detail.png" width="230"/>                   
                 </a>
             </td>
             <td>   
