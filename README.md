@@ -11,6 +11,46 @@ TechChallengeKentra-Flutter - EL AMRI ZAKARIYA
 ![alt text](assets/demo/part3.gif)
 
 
+<div>
+    <table>
+        <tr>
+            <td> 
+                <a>
+                    <img src="assets/demo/part1.gif" width="230"/>
+                </a>
+            </td>    
+            <td>   
+                <a>
+                    <img src="assets/demo/part2.gif" width="230"/>                   
+                </a>
+            </td>
+             <td>   
+                 <a>
+                      <img src="assets/demo/part3.gif" width="230"/>                   
+                  </a>
+            </td>        
+        </tr>
+        <tr>
+            <td> 
+                <a>
+                      <img src="assets/demo/list.gif" width="230"/>                   
+                </a>
+            </td>    
+            <td>   
+                <a>
+                      <img src="assets/demo/list.gif" width="230"/>                   
+                </a>
+            </td>
+            <td>   
+                <a>
+                      <img src="assets/demo/search.gif" width="230"/>                   
+                </a>
+            </td>            
+        </tr>
+    </table>
+</div>
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
