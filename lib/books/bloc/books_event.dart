@@ -17,6 +17,10 @@ class BookAddToFavoris extends BooksEvent {
 
   BookAddToFavoris(this.id);
 }
-class BookFilterOnlyFavoris extends BooksEvent {
+class BookFilterFavorisOnQuery extends BooksEvent {
+
+}
+
+class BookFilterFavorisShowAll extends BooksEvent {
 
 }

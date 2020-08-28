@@ -31,12 +31,13 @@ abstract class AsyncService {
           queryParameters: queryParameters
       );
 
-      return response.data ;
+//      if(res)
+//      return response.data ;
 
-      if (response != null) {
+      if (response.statusCode == 200) {
         return response.data ;
       }else{
-        throw ('${response.data["responseDescription"]}');
+        throw ('error fetching books');
       }
 
 

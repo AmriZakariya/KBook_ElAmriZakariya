@@ -1,9 +1,9 @@
 part of 'books_bloc.dart';
 
-enum BookStatus { initial, success, filtred, failure }
+enum BookStatus { initial, success, filtredSection,filtredAllBooks, failure }
 
 class BooksState extends Equatable {
-  const BooksState({
+  BooksState({
     this.status = BookStatus.initial,
     this.books = const <BookModel>[],
     this.hasReachedMax = false,
@@ -11,7 +11,7 @@ class BooksState extends Equatable {
   });
 
   final BookStatus status;
-  final List<BookModel> books;
+  List<BookModel> books;
   final bool hasReachedMax;
   final List<String> favs ;
 

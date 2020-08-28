@@ -2,6 +2,11 @@
 
 TechChallengeKentra-Flutter - EL AMRI ZAKARIYA
 
+# demo
+
+![alt text](assets/kentra.png)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

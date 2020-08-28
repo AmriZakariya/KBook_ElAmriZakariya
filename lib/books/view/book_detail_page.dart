@@ -3,20 +3,33 @@ import 'package:kbook_elamri_zakariya/books/books.dart';
 import 'package:kbook_elamri_zakariya/books/utils/network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class BookDetailPage extends StatelessWidget {
+class BookDetailPage extends StatefulWidget {
   final BookModel book;
   final BooksBloc bookBloc;
 
   const BookDetailPage({Key key, @required this.book, @required this.bookBloc}) : super(key: key);
+
+  @override
+  _BookDetailPageState createState() => _BookDetailPageState();
+}
+
+class _BookDetailPageState extends State<BookDetailPage> {
+
+  @override
+  void initState() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Builder(
+        builder: (context) =>Stack(
         children: <Widget>[
           Container(
               height: double.infinity,
               child: PNetworkImage(
-                book.imageLinks.thumbnail,
+                widget.book.imageLinks.thumbnail,
                 fit: BoxFit.cover,
               )),
           SafeArea(
@@ -52,13 +65,13 @@ class BookDetailPage extends StatelessWidget {
                             children: <Widget>[
                               ListTile(
                                 title: Text(
-                                  book.title,
+                                  widget.book.title,
                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 28.0),
                                 ),
                                 trailing: IconButton(
 //                                  color: book.isFavori ? Colors.red : Cowlors.white,
                                   icon:
-                                  book.isFavori ? Icon(
+                                  widget.book.isFavori ? Icon(
                                     Icons.favorite,
                                     color: Colors.red ,
                                   ) : Icon(
@@ -66,7 +79,13 @@ class BookDetailPage extends StatelessWidget {
                                   color: Colors.black ,
                                 )  ,
                                   onPressed: () async{
-                                    await bookBloc.add(BookAddToFavoris(book.id));
+                                    await widget.bookBloc.add(BookAddToFavoris(widget.book.id));
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text(widget.book.isFavori ?  'Book removed from favorites ' : 'Book added to favorites '),
+                                    ));
+                                    setState(() {
+                                      widget.book.isFavori = !widget.book.isFavori ;
+                                    });
                                   },
                                 ),
                               ),
@@ -80,7 +99,7 @@ class BookDetailPage extends StatelessWidget {
                                   Container(
                                     alignment: Alignment.topLeft,
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Text(book.description),
+                                    child: Text(widget.book.description),
                                   )
                                 ],
                               ),
@@ -94,7 +113,7 @@ class BookDetailPage extends StatelessWidget {
                                   Container(
                                     alignment: Alignment.topLeft,
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Text(book.authors.toString()),
+                                    child: Text(widget.book.authors.toString()),
                                   )
                                 ],
                               ),
@@ -150,17 +169,17 @@ class BookDetailPage extends StatelessWidget {
             ],
           ))
         ],
-      ),
-      floatingActionButton: book.buyLink.isNotEmpty
+      )),
+      floatingActionButton: widget.book.buyLink.isNotEmpty
           ? RaisedButton(
               padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               onPressed: () async {
-                if (await canLaunch(book.buyLink)) {
-                  await launch(book.buyLink);
+                if (await canLaunch(widget.book.buyLink)) {
+                  await launch(widget.book.buyLink);
                 } else {
                   Scaffold.of(context).showSnackBar(SnackBar(
-                    content: new Text('Error: ${book.buyLink}'),
+                    content: new Text('Error: ${widget.book.buyLink}'),
                     duration: new Duration(seconds: 10),
                   ));
                 }

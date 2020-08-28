@@ -14,7 +14,7 @@ part 'books_event.dart';
 part 'books_state.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
-  BooksBloc() : super(const BooksState());
+  BooksBloc() : super(BooksState());
   final BooksServices bookServices = new BooksServices();
   String query;
 
@@ -33,6 +33,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   Stream<BooksState> mapEventToState(BooksEvent event) async* {
 
     if (event is BooksSerchInit) {
+      if(event.query.isNotEmpty){
       this.query = event.query;
       yield state.copyWith(
         status: BookStatus.initial,
@@ -41,6 +42,12 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
         favs: [],
       );
       yield await _mapPostFetchedToState(state);
+      }else{
+        yield state.copyWith(
+          books: [],
+        );
+      }
+
     }
 
     if (event is BooksFetched) {
@@ -48,25 +55,27 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     }
 
     if (event is BookAddToFavoris) {
-      List<String> favs = state.favs.map((e) => e).toList();
-      if (favs.contains(event.id)) {
-          favs.remove(event.id);
+//      List<String> favs = state.favs.map((e) => e).toList();
+      if (state.favs.contains(event.id)) {
+        state.favs.remove(event.id);
+        state.books.firstWhere((element) => element.id == event.id).isFavori = false ;
       } else {
-          favs.add(event.id);
+        state.favs.add(event.id);
+        state.books.firstWhere((element) => element.id == event.id).isFavori = true ;
       }
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setStringList("favs", favs);
+      prefs.setStringList("favs", state.favs);
 
       yield state.copyWith(
-        status: BookStatus.success,
         books: state.books,
         hasReachedMax: false,
-        favs: favs,
+        favs: state.favs,
       );
     }
 
-    if (event is BookFilterOnlyFavoris) {
-      if(state.status == BookStatus.filtred){
+    if (event is BookFilterFavorisOnQuery) {
+      if(state.status == BookStatus.filtredSection){
 //        List<BookModel> booksFiltred = state.books.where((element) => state.favs.contains(element.id)).map((e) => e).toList() ;
 //          yield state.copyWith(
 //            status: BookStatus.filtred,
@@ -81,7 +90,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
         );
       }else{
         yield state.copyWith(
-          status: BookStatus.filtred,
+          status: BookStatus.filtredSection,
           hasReachedMax: true,
         );
       }
@@ -89,25 +98,25 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   }
 
   Future<BooksState> _mapPostFetchedToState(BooksState state) async {
-    if (state.hasReachedMax) return state;
+    if (state.hasReachedMax || state.status == BookStatus.filtredSection) return state;
     try {
       if (state.status == BookStatus.initial) {
-        List<String> favs = state.favs.map((e) => e).toList();
+//        List<String> favs = state.favs.map((e) => e).toList();
 
-        if (favs.isEmpty) {
+        if (state.favs.isEmpty) {
           await SharedPreferences.getInstance().then((prefs) {
             if (prefs.getStringList("favs") != null) {
-              favs.addAll(prefs.getStringList("favs"));
+              state.favs.addAll(prefs.getStringList("favs"));
             }
           });
         }
 
-        final books = await bookServices.getBooks(query, favs: favs);
+        final books = await bookServices.getBooks(query, favs: state.favs);
         return state.copyWith(
           status: BookStatus.success,
           books: books,
           hasReachedMax: false,
-          favs: favs,
+          favs: state.favs,
         );
       }
       final books = await bookServices.getBooks(query, favs: state.favs, startIndex: state.books.length);

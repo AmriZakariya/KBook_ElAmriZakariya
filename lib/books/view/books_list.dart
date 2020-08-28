@@ -34,21 +34,27 @@ class _BooksListState extends State<BooksList> {
         if (!state.hasReachedMax && _isBottom) {
           bookBloc.add(BooksFetched());
         }
-        if (state.status == BookStatus.initial) {
+        if (state.status == BookStatus.initial  ) {
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text('Display search result for query = ${_textController.text}'),
             duration: const Duration(seconds: 3),
           ));
         }
-        if (state.status == BookStatus.filtred) {
+        if (state.status == BookStatus.filtredSection) {
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text('Show favorites books'),
             duration: const Duration(seconds: 3),
           ));
         }
+//        if (state.status == BookStatus.filtredAllBooks) {
+//          Scaffold.of(context).showSnackBar(SnackBar(
+//            content: Text('Show favorites books'),
+//            duration: const Duration(seconds: 3),
+//          ));
+//        }
       },
       builder: (context, state) {
-        List<BookModel> bookList = state.status == BookStatus.filtred
+        List<BookModel> bookList = state.status == BookStatus.filtredSection
             ? state.books.where((element) => state.favs.contains(element.id)).map((e) => e).toList()
             : state.books;
         return SingleChildScrollView(
@@ -59,7 +65,7 @@ class _BooksListState extends State<BooksList> {
               children: <Widget>[
                 if (state.status == BookStatus.failure)
                   const Center(child: Text('failed to fetch books'))
-                else if (state.status == BookStatus.success || state.status == BookStatus.filtred)
+                else if (state.status == BookStatus.success || state.status == BookStatus.filtredSection)
                   if (bookList.isEmpty)
                     const Center(child: Text('no books'))
                   else
@@ -97,12 +103,24 @@ class _BooksListState extends State<BooksList> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Books",
-                          style: TextStyle(color: Colors.white, fontSize: 24),
+                          "KBook EL AMRI ZAKARIYA",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
+                        Spacer(),
+//                        IconButton(
+//                          tooltip: "show all favorites books",
+//                          onPressed: () {
+//                            bookBloc.add((BookFilterFavorisOnQuery()));
+//                          },
+//                          icon: Icon(
+//                            Icons.favorite,
+//                            color: Colors.white,
+//                          ),
+//                        ),
                         IconButton(
+                          tooltip: "Filter favorites books in this query",
                           onPressed: () {
-                            bookBloc.add((BookFilterOnlyFavoris()));
+                            bookBloc.add((BookFilterFavorisOnQuery()));
                           },
                           icon: Icon(
                             Icons.filter_list,
