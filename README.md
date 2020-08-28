@@ -4,13 +4,6 @@ TechChallengeKentra-Flutter - EL AMRI ZAKARIYA
 
 # demo
 
-![alt text](assets/demo/list.png)
-![alt text](assets/demo/detail.png)
-![alt text](assets/demo/part1.gif)
-![alt text](assets/demo/part2.gif)
-![alt text](assets/demo/part3.gif)
-
-
 <div>
     <table>
         <tr>
@@ -33,17 +26,17 @@ TechChallengeKentra-Flutter - EL AMRI ZAKARIYA
         <tr>
             <td> 
                 <a>
-                      <img src="assets/demo/list.gif" width="230"/>                   
+                      <img src="assets/demo/list.png" width="230"/>                   
                 </a>
             </td>    
             <td>   
                 <a>
-                      <img src="assets/demo/list.gif" width="230"/>                   
+                      <img src="assets/demo/list.png" width="230"/>                   
                 </a>
             </td>
             <td>   
                 <a>
-                      <img src="assets/demo/search.gif" width="230"/>                   
+                      <img src="assets/demo/search.png" width="230"/>                   
                 </a>
             </td>            
         </tr>
