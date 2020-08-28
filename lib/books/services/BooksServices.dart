@@ -34,9 +34,9 @@ class BooksServices extends AsyncService {
                   imageLinks: item.volumeInfo.imageLinks ??
                       ImageLinksJson(
                           smallThumbnail:
-                              "https://flutter.dev/assets/flutter-lockup-1caf6476beed76adec3c477586da54de6b552b2f42108ec5bc68dc63bae2df75.png",
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png",
                           thumbnail:
-                              "https://flutter.dev/assets/flutter-lockup-1caf6476beed76adec3c477586da54de6b552b2f42108ec5bc68dc63bae2df75.png"),
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"),
                   isFavori: favs.contains(item.id) ? true : false,
                 ))
             .toList();

@@ -4,7 +4,11 @@ TechChallengeKentra-Flutter - EL AMRI ZAKARIYA
 
 # demo
 
-![alt text](assets/kentra.png)
+![alt text](assets/demo/list.png)
+![alt text](assets/demo/detail.png)
+![alt text](assets/demo/part1.gif)
+![alt text](assets/demo/part2.gif)
+![alt text](assets/demo/part3.gif)
 
 
 ## Getting Started
